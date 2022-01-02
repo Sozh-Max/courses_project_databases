@@ -1,0 +1,9 @@
+{
+  "dev": {
+    "driver": "pg",
+    "user": "develop",
+    "password": "1234",
+    "host": "localhost",
+    "database": "courses_shop"
+  }
+}

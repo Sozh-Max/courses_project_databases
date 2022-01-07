@@ -1,8 +1,7 @@
-CREATE TABLE "Users" (
+CREATE TABLE Users (
 	"id" serial NOT NULL,
 	"login" TEXT NOT NULL UNIQUE,
 	"password" TEXT NOT NULL,
-	"email" TEXT NOT NULL,
 	"role" int NOT NULL,
 	"is_active" BOOLEAN NOT NULL DEFAULT 'true',
 	"created_at" TIMESTAMP NOT NULL,
@@ -11,7 +10,7 @@ CREATE TABLE "Users" (
   OIDS=FALSE
 );
 
-CREATE TABLE "Products" (
+CREATE TABLE Products (
 	"id" serial NOT NULL,
 	"title" TEXT NOT NULL,
 	"price" float4 NOT NULL,
@@ -21,7 +20,7 @@ CREATE TABLE "Products" (
   OIDS=FALSE
 );
 
-CREATE TABLE "Product_params" (
+CREATE TABLE Product_params (
 	"id" serial NOT NULL,
 	"name" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
@@ -30,7 +29,7 @@ CREATE TABLE "Product_params" (
   OIDS=FALSE
 );
 
-CREATE TABLE "Product_params_values" (
+CREATE TABLE Product_params_values (
 	"id" serial NOT NULL,
 	"product_id" int NOT NULL,
 	"product_param_id" int NOT NULL,
@@ -40,7 +39,7 @@ CREATE TABLE "Product_params_values" (
   OIDS=FALSE
 );
 
-CREATE TABLE "Orders" (
+CREATE TABLE Orders (
 	"id" serial NOT NULL,
 	"relations" TEXT NOT NULL,
 	"user_id" int NOT NULL,
@@ -50,7 +49,7 @@ CREATE TABLE "Orders" (
   OIDS=FALSE
 );
 
-CREATE TABLE "Categories" (
+CREATE TABLE Categories (
 	"id" serial NOT NULL,
 	"title" TEXT NOT NULL,
 	"description" TEXT NOT NULL,
@@ -59,7 +58,7 @@ CREATE TABLE "Categories" (
   OIDS=FALSE
 );
 
-CREATE TABLE "Order_relations" (
+CREATE TABLE Order_relations (
 	"id" serial NOT NULL,
 	"product_id" int NOT NULL,
 	"count" int NOT NULL DEFAULT '1',

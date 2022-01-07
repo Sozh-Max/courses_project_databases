@@ -27,11 +27,15 @@ class ApiClass {
 	}
 
 	async getAllUsers() {
-		return await this.DBQuery('SELECT * FROM public."Users"');
+		return await this.DBQuery('SELECT * FROM Users');
+	}
+
+	async getAllCategories() {
+		return await this.DBQuery('SELECT * FROM Categories');
 	}
 
 }
 
 module.exports = {
-	Api: Api = new ApiClass(),
+	Api: new ApiClass(),
 }

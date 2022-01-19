@@ -9,5 +9,6 @@ export const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		flexGrow: 1,
+		paddingTop: '35px',
 	}
 }

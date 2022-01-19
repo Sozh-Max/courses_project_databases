@@ -19,6 +19,6 @@ export const ColumnContainer = ({ children, type }) => (
 	</Box>
 )
 
-export const LabelItem = ({ children }) => (
-	<Box sx={styles.label}>{ children }</Box>
+export const LabelItem = ({ children, title }) => (
+	<Box title={title} sx={styles.label}>{ children }</Box>
 )

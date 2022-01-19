@@ -14,6 +14,7 @@ CREATE TABLE Products (
 	"id" serial NOT NULL,
 	"title" TEXT NOT NULL,
 	"price" float4 NOT NULL,
+	"url" TEXT NOT NULL,
 	"category_id" int NOT NULL,
 	CONSTRAINT "Products_pk" PRIMARY KEY ("id")
 ) WITH (
@@ -66,3 +67,22 @@ CREATE TABLE Order_relations (
 ) WITH (
   OIDS=FALSE
 );
+
+
+ALTER TABLE Products ADD CONSTRAINT Products_fk0 FOREIGN KEY (category_id) REFERENCES Categories(id);
+
+ALTER TABLE Product_params_values ADD CONSTRAINT Product_params_values_fk0 FOREIGN KEY (product_id) REFERENCES Products(id) ON DELETE CASCADE;
+ALTER TABLE Product_params_values ADD CONSTRAINT Product_params_values_fk1 FOREIGN KEY (product_param_id) REFERENCES Product_params(id);
+
+ALTER TABLE Orders ADD CONSTRAINT Orders_fk0 FOREIGN KEY (relations) REFERENCES Order_relations(id);
+ALTER TABLE Orders ADD CONSTRAINT Orders_fk1 FOREIGN KEY (user_id) REFERENCES Users(id);
+
+
+ALTER TABLE Order_relations ADD CONSTRAINT Order_relations_fk0 FOREIGN KEY (product_id) REFERENCES Products(id);
+
+
+
+
+
+
+

@@ -49,14 +49,14 @@ export const ModalWrapper = ({
 					onClick={eventClose}
 					sx={styles.btnClose}
 				>
-					{ buttonCancelText ?? 'Cancel' }
+					{ buttonCancelText ?? 'Отменить' }
 				</Button>
 				<Button
 					onClick={eventApply}
 					autoFocus
 					sx={styles.btnApply}
 				>
-					{ buttonApplyText ?? 'Apply' }
+					{ buttonApplyText ?? 'Применить' }
 				</Button>
 			</DialogActions>
 		)}

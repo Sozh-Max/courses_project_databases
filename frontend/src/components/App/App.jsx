@@ -16,7 +16,6 @@ export const App = () => {
 	const { themeName } = useSelector(state => state.settings);
 	const theme = themesAdapter(themeName);
 
-
 	return (
 		<ThemeProvider theme={theme}>
 			<LocalizationProvider dateAdapter={AdapterDateFns}>

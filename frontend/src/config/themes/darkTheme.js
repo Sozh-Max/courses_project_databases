@@ -30,7 +30,7 @@ export const darkTheme = createTheme({
 		colorPauseHover: 'rgba(101,96,148,1)',
 	},
 	typography: {
-		fontFamily: 'Josefin Sans',
+		fontFamily: 'Comfortaa',
 		fontSize: 16,
 	},
 });

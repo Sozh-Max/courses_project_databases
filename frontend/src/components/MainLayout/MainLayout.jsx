@@ -4,6 +4,7 @@ import { Outlet } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
 import { Header } from '../Header';
+import { Footer } from '../Footer';
 
 import { styles } from './styles';
 
@@ -16,6 +17,8 @@ export const MainLayout = () => {
 			<Box component='main' sx={styles.main}>
 				<Outlet />
 			</Box>
+
+			<Footer />
 		</Box>
 	)
 }

@@ -26,8 +26,16 @@ class ApiClientClass {
 			redirect: 'follow',
 			referrerPolicy: 'no-referrer',
 			...body,
-		}).catch(e => throw new Error(e));
+		}).catch(e => console.log(e));
 		return await response.json();
+	}
+
+	getAllProductParams = async () => {
+		return await this.request({
+			route: 'productParams',
+			data: {},
+			method: 'GET',
+		});
 	}
 
 	getAllCategories = async () => {
@@ -37,6 +45,58 @@ class ApiClientClass {
 			method: 'GET',
 		});
 	}
+
+	getCategoryById = async id => {
+		return await this.request({
+			route: `categories/${id}`,
+			data: {},
+			method: 'GET',
+		});
+	}
+
+	createCategory = async (data) => {
+		return await this.request({
+			route: 'categories',
+			data,
+			method: 'POST',
+		});
+	}
+
+	updateCategory = async (data) => {
+		return await this.request({
+			route: 'categories',
+			data,
+			method: 'PUT',
+		});
+	}
+
+	getAllProducts = async () => {
+		return await this.request({
+			route: 'products',
+			data: {},
+			method: 'GET',
+		});
+	}
+
+	createProduct = async (data) => {
+		return await this.request({
+			route: 'products',
+			data,
+			method: 'POST',
+		});
+	}
+
+	deleteProduct = async (id) => {
+		return await this.request({
+			route: 'products',
+			data: {
+				id,
+			},
+			method: 'DELETE',
+		});
+	}
+
+
 
 	initApplication() {
 

@@ -11,11 +11,28 @@ export const styles = {
 	container: {
 		width: '1200px',
 		padding: '0 15px',
-		display: 'flex',
 		margin: '0 auto',
+	},
+	row: {
+		marginLeft: '-15px',
+		marginRight: '-15px',
+		display: 'flex',
 		justifyContent: 'space-between',
 	},
 	userBlock: {
 		marginLeft: '30px',
-	}
+	},
+	navContainer: {
+		flexGrow: 1,
+		display: 'flex',
+	},
+	navLink: (theme) => ({
+		color: theme.basic.basicColor,
+		textDecoration: 'none',
+		display: 'inline-block',
+		padding: '8px 15px',
+		'&:hover': {
+			color: theme.basicButtons.colorPlay,
+		}
+	})
 };

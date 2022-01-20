@@ -67,12 +67,18 @@ export const SettingsProductsPage = () => {
 	};
 
 	const editItem = async () => {
-		await ApiClient.updateCategory({
+		await ApiClient.updateProduct({
 			id: coreData.id,
 			title: coreData.title.trim(),
-			description: coreData.description.trim(),
+			price: Number(coreData.price.trim()),
+			params: coreData.params,
+			categoryId: coreData.category.value,
+			url: coreData.url,
 		}).then(data => {
 			StoreWorker.setProducts(transformProducts(data));
+			handleCloseModal();
+		}).catch(e => {
+			console.log(e);
 			handleCloseModal();
 		});
 	}
@@ -85,17 +91,26 @@ export const SettingsProductsPage = () => {
 		handleOpenModal();
 	}
 
-	const handleEventEdit = id => {
-		const elem = products.find(elem => elem.id ===id)
-		setCoreData({
-			...initState,
-			type: 'edit',
-			id: elem.id,
-			title: elem.title,
-			price: elem.price,
-			url: elem.url,
-		});
-		handleOpenModal();
+	const handleEventEdit = async id => {
+		await ApiClient.getProductById(id).then(data => {
+			setCoreData({
+				...initState,
+				type: 'edit',
+				...data,
+				price: String(data.price),
+				category: {
+					value: data.category_id,
+					name: data.category_title,
+				},
+				params: productParams.map(elem => ({
+					...elem,
+					value: data.params.find(el => el.params_id === elem.id)
+						? data.params.find(el => el.params_id === elem.id).value
+						: '',
+				}))
+			});
+			handleOpenModal();
+		})
 	}
 
 	const handleEventDelete = async id => {

@@ -43,24 +43,61 @@ class ApiClass {
 	}
 
 	async createCategory(data) {
-		return await this.DBQuery(`INSERT INTO Categories (title,description) VALUES ('${data.title}', '${data.description}')`);
+		return await this.DBQuery(`
+			INSERT INTO Categories (title,description)
+			VALUES ('${data.title}', '${data.description}')
+		`);
 	}
 
 	async updateCategory(data) {
-		return await this.DBQuery(`UPDATE Categories SET title='${data.title}',description='${data.description}' WHERE id='${data.id}'`);
+		return await this.DBQuery(`
+			UPDATE Categories
+			SET title='${data.title}',description='${data.description}' WHERE id='${data.id}'
+		`);
 	}
 
 	async createProduct(data) {
-		const product = await this.DBQuery(`
+		return await this.DBQuery(`
 			INSERT INTO Products (title,price,category_id,url) 
-			VALUES ('${data.title}', '${data.price}', '${data.categoryId}', '${data.url}') RETURNING id`);
+			VALUES ('${data.title}', '${data.price}', '${data.categoryId}', '${data.url}')
+			 RETURNING id
+		`).then(async product => {
+			const currentParams = data.params.filter(elem => elem.value.trim());
+			return await currentParams.map(async elem => {
+				return await this.DBQuery(`
+					INSERT INTO Product_params_values (product_id,product_param_id,value)
+					VALUES ('${product.rows[0].id}', '${elem.id}', '${elem.value}')
+				`);
+			});
+		})
+	};
 
-		const currentParams = data.params.filter(elem => elem.value.trim());
-
-		return await currentParams.map(async elem => {
-
-			return await this.DBQuery(`INSERT INTO Product_params_values (product_id,product_param_id,value) VALUES ('${product.rows[0].id}', '${elem.id}', '${elem.value}')`);
-		});
+	async updateProduct(data) {
+		return await this.DBQuery(`
+			DELETE
+			FROM 
+				product_params_values
+			WHERE
+				${data.id} = product_params_values.product_id
+		`).then(async () => {
+			return await this.DBQuery(`
+				UPDATE Products
+				SET
+					title='${data.title}',
+					price='${data.price}',
+					category_id='${data.categoryId}',
+					url='${data.url}'
+				WHERE id='${data.id}'
+			`).then(async () => {
+				const currentParams = data.params.filter(elem => elem.value.trim());
+				return await currentParams.map(async elem => {
+					return await this.DBQuery(`
+					INSERT INTO Product_params_values (product_id,product_param_id,value)
+					VALUES ('${data.id}', '${elem.id}', '${elem.value}')
+				`);
+				});
+			});
+		})
 	}
 
 	async getAllProducts() {
@@ -70,7 +107,7 @@ class ApiClass {
 				Products.title,
 				Products.price,
 				Products.url,
-				Categories.id as category_idd,
+				Categories.id as category_id,
 				Categories.title as category_title
 			FROM
 				Products, Categories
@@ -110,17 +147,58 @@ class ApiClass {
 		})
 	}
 
-	async deleteProduct(id) {
-		return await this.DBQuery(
-			`
-				DELETE
+	async getProductBiId(id) {
+		return await this.DBQuery(`
+			SELECT
+				Products.id,
+				Products.title,
+				Products.price,
+				Products.url,
+				Categories.id as category_id,
+				Categories.title as category_title
+			FROM
+				Products, Categories
+			WHERE
+				Products.category_id = Categories.id
+			AND
+				Products.id = ${id}
+		`).then(async product => {
+			return await this.DBQuery(`
+				SELECT
+					Product_params.id as params_id,
+					Product_params.name,
+					Product_params.description,
+					product_params_values.id,
+					product_params_values.value,
+					product_params_values.product_id,
+					product_params_values.product_param_id
 				FROM
-					Products
+					Product_params, product_params_values, products
 				WHERE
-					Products.id = ${id}
-			`
-		)
+					product_params_values.product_param_id = product_params.id
+				AND
+					${id} = product_params_values.product_id
+				AND
+					${id} = products.id
+			`).then(async params => {
+				return {
+					...product.rows[0],
+					params: params.rows,
+				}
+			});
+		});
 	}
+
+	async deleteProduct(id) {
+		return await this.DBQuery(`
+			DELETE
+			FROM
+				Products
+			WHERE
+				Products.id = ${id}
+		`)
+	}
+
 }
 
 module.exports = {

@@ -96,10 +96,21 @@ class ApiClientClass {
 		});
 	}
 
+	getProductById = async (id) => {
+		return await this.request({
+			route: `products/${id}`,
+			data: {},
+			method: 'GET',
+		});
+	}
 
-
-	initApplication() {
-
+	updateProduct = async (data) => {
+		console.log(data);
+		return await this.request({
+			route: 'products',
+			data,
+			method: 'PUT',
+		});
 	}
 
 }

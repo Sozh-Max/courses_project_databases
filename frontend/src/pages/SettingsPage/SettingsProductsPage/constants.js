@@ -14,7 +14,6 @@ export const initCategoriesState = {
 	categoryError: false,
 }
 
-
 export const productsColumn = [
 	{
 		width: 500,

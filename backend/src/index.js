@@ -19,6 +19,7 @@ app.use('/api/productParams', productParamsRouter);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/categories/:id', categoriesRoutes);
 app.use('/api/products', productsRouter);
+app.use('/api/products/:id', productsRouter);
 
 
 app.listen(port, () => {

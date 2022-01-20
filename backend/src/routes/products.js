@@ -18,7 +18,18 @@ router.post('/', async (req, res) => {
 router.get('/', async (req, res) => {
 	try {
 		const data = await Api.getAllProducts();
-		console.log(data);
+		res.status(200).json(data);
+	} catch (e) {
+		console.log(e)
+		res.status(500).json({
+			message: 'Server error'
+		})
+	}
+});
+
+router.get('/:id', async (req, res) => {
+	try {
+		const data = await Api.getProductBiId(req.params.id);
 		res.status(200).json(data);
 	} catch (e) {
 		console.log(e)
@@ -30,11 +41,25 @@ router.get('/', async (req, res) => {
 
 router.delete('/', async (req, res) => {
 	try {
-		console.log(req);
 		await Api.deleteProduct(req.body.id).then(async () => {
 			const data = await Api.getAllProducts();
 			res.status(200).json(data);
 		})
+	} catch (e) {
+		console.log(e)
+		res.status(500).json({
+			message: 'Server error'
+		})
+	}
+});
+
+router.put('/', async (req, res) => {
+	try {
+		console.log('req.body', req.body);
+		await Api.updateProduct(req.body).then(async () => {
+			const data = await Api.getAllProducts();
+			res.status(200).json(data);
+		});
 	} catch (e) {
 		console.log(e)
 		res.status(500).json({

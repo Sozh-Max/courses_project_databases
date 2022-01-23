@@ -1,4 +1,5 @@
 const { Pool } = require('pg')
+const md5 = require('md5');
 
 class ApiClass {
 	constructor() {
@@ -197,6 +198,36 @@ class ApiClass {
 			WHERE
 				Products.id = ${id}
 		`)
+	}
+
+	async registration(data) {
+		return await this.getAllUsers().then(async users => {
+			if (users.rows.find(el => el.login === data.login)) {
+				return false;
+			}
+			return this.DBQuery(`
+				INSERT INTO Users (login,password,role,is_active,created_at)
+				VALUES
+					('${data.login}', '${md5(data.password)}', '${2}', '${true}', NOW())
+			`)
+		})
+	}
+
+	async login(data) {
+		return await this.getAllUsers().then(async users => {
+			let result = false;
+			for (let item of users.rows) {
+				if (item.login === data.login && item.is_active) {
+					if (item.password === md5(data.password)) {
+						result = {
+							role: item.role,
+							login: item.login,
+						}
+					}
+				}
+			}
+			return result;
+		})
 	}
 
 }

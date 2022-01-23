@@ -3,13 +3,15 @@ import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
+import Switch from '@mui/material/Switch';
 
 import { ColumnContainer, LabelItem, RowContainer } from '../modalBuildComponents';
 import { InputBaseCustom } from '../../inputs';
 import { ModalWrapper } from '../ModalWrapper';
-import { initLoginState } from './constants';
+
+import { styles } from './styles';
+import { FormControlLabel, FormGroup } from '@mui/material';
 
 export const ModalLogin = ({
 	core,
@@ -17,8 +19,6 @@ export const ModalLogin = ({
 	eventApply,
 	...props
 }) => {
-	const [ core, setCore ] = useState(initLoginState);
-
 	const [showPassword, setShowPassword] = useState(false);
 
 	const handleClickShowPassword = () => setShowPassword(!showPassword);
@@ -47,9 +47,13 @@ export const ModalLogin = ({
 	const validate = () => {
 		let result = true;
 		const errors = {}
-		if (!core.letter.trim().length) {
+		if (!core.login.trim().length) {
 			result = false;
-			errors['letterError'] = true;
+			errors['loginError'] = true;
+		}
+		if (!core.password.trim().length) {
+			result = false;
+			errors['passwordError'] = true;
 		}
 		if (!result) {
 			setCore({
@@ -73,9 +77,9 @@ export const ModalLogin = ({
 		>
 			<RowContainer>
 				<ColumnContainer>
-					<LabelItem>Login</LabelItem>
+					<LabelItem>Логин</LabelItem>
 					<InputBaseCustom
-						placeholder='Enter Login'
+						placeholder='Введите Логин'
 						value={core.login}
 						error={core.loginError}
 						onChange={(e) => {
@@ -93,17 +97,22 @@ export const ModalLogin = ({
 
 			<RowContainer>
 				<ColumnContainer>
-					<LabelItem>Password</LabelItem>
+					<LabelItem>Пароль</LabelItem>
 					<Box sx={styles.inputContainer}>
 						<InputBaseCustom
-							value={core.login}
-							error={core.loginError}
-							placeholder='Enter Password'
+							value={core.password}
+							error={core.passwordError}
+							placeholder='Введите Пароль'
 							className='input-custom-password'
 							type={showPassword ? 'text': 'password'}
-							onChange={e => {
-								setPasswordData(e.target.value);
-								setPasswordError(false);
+							onChange={(e) => {
+								handleChangeCore([{
+									key: 'password',
+									value: e.target.value,
+								}, {
+									key: 'passwordError',
+									value: false,
+								}]);
 							}}
 						/>
 						<IconButton
@@ -116,6 +125,27 @@ export const ModalLogin = ({
 						</IconButton>
 					</Box>
 				</ColumnContainer>
+			</RowContainer>
+
+			<RowContainer>
+				<FormGroup>
+					<FormControlLabel
+						sx={styles.switch}
+						control={
+							<Switch
+								checked={!core.isLogin}
+								size='small'
+								onChange={() => {
+									setCore({
+										...core,
+										isLogin: !core.isLogin,
+									})
+								}}
+							/>
+						}
+						label={core.isLogin ? 'К регистрации' : 'Хочу войти'}
+					/>
+				</FormGroup>
 			</RowContainer>
 		</ModalWrapper>
 	)

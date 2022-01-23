@@ -1,6 +1,6 @@
 import { store } from './store';
 import { setAuthenticated, setUsername, setUserRole } from './user';
-import { hideLoader, showLoader } from './settings';
+import { addStatusModalItem, hideLoader, removeStatusModalItem, showLoader } from './settings';
 import { resetProducts, setCategories, setProductParams, setProducts } from './siteData';
 
 
@@ -24,6 +24,9 @@ class StoreWorkerClass {
 
 	setProducts = (payload) => this.store.dispatch(setProducts(payload));
 	resetProducts = () => this.store.dispatch(resetProducts());
+
+	addStatusModalItem = (payload) => this.store.dispatch(addStatusModalItem(payload));
+	removeStatusModalItem = (payload) => this.store.dispatch(removeStatusModalItem(payload));
 
 }
 

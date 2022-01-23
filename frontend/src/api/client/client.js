@@ -1,3 +1,5 @@
+import { logDOM } from '@testing-library/react';
+
 class ApiClientClass {
 	constructor({ port, url }) {
 		this.address = `${url}:${port}/api/`;
@@ -105,7 +107,6 @@ class ApiClientClass {
 	}
 
 	updateProduct = async (data) => {
-		console.log(data);
 		return await this.request({
 			route: 'products',
 			data,
@@ -113,6 +114,21 @@ class ApiClientClass {
 		});
 	}
 
+	registration = async (data) => {
+		return await this.request({
+			route: 'users/register',
+			data,
+			method: 'POST',
+		});
+	}
+
+	login = async (data) => {
+		return await this.request({
+			route: `users/login`,
+			data,
+			method: 'POST',
+		});
+	}
 }
 
 export const ApiClient = new ApiClientClass({

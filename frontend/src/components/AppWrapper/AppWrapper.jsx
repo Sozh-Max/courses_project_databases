@@ -14,6 +14,7 @@ import {
 	SettingsCategoriesPage,
 	MainPage,
 } from '../../pages';
+import { StatusModalContainer } from '../StatusModalContainer';
 
 import { styles } from './styles';
 
@@ -44,6 +45,7 @@ export const AppWrapper = () => {
 					</Route>
 				</Route>
 			</Routes>
+			<StatusModalContainer />
 		</Box>
 	)
 }

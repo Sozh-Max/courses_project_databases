@@ -31,4 +31,10 @@ export const styles = {
       height: '24px',
     },
   }),
+  switch: {
+    marginLeft: '15px',
+    '& .MuiTypography-root': {
+      fontSize: 14,
+    }
+  },
 }

@@ -16,4 +16,7 @@ export const styles = {
 		marginLeft: '-15px',
 		marginRight: '-15px',
 	},
+	content: {
+		flexGrow: 1,
+	}
 }

@@ -27,6 +27,18 @@ router.get('/', async (req, res) => {
 	}
 });
 
+router.get('/category/:id', async (req, res) => {
+	try {
+		const data = await Api.getAllProducts(req.params.id);
+		res.status(200).json(data);
+	} catch (e) {
+		console.log(e)
+		res.status(500).json({
+			message: 'Server error'
+		})
+	}
+});
+
 router.get('/:id', async (req, res) => {
 	try {
 		const data = await Api.getProductBiId(req.params.id);
@@ -55,7 +67,6 @@ router.delete('/', async (req, res) => {
 
 router.put('/', async (req, res) => {
 	try {
-		console.log('req.body', req.body);
 		await Api.updateProduct(req.body).then(async () => {
 			const data = await Api.getAllProducts();
 			res.status(200).json(data);

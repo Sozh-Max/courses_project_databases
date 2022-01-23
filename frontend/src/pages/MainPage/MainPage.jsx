@@ -13,7 +13,7 @@ export const MainPage = () => {
 		<Box sx={styles.container}>
 			<Box sx={styles.row}>
 				<Aside />
-				<Box>
+				<Box sx={styles.content}>
 					<Outlet />
 				</Box>
 			</Box>

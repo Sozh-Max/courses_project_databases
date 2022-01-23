@@ -72,9 +72,9 @@ class ApiClientClass {
 		});
 	}
 
-	getAllProducts = async () => {
+	getAllProducts = async (id) => {
 		return await this.request({
-			route: 'products',
+			route: 'products' + (id ? `/category/${id}` : ''),
 			data: {},
 			method: 'GET',
 		});

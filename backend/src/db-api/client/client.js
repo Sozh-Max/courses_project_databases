@@ -101,7 +101,7 @@ class ApiClass {
 		})
 	}
 
-	async getAllProducts() {
+	async getAllProducts(categoryId) {
 		return await this.DBQuery(`
 			SELECT
 				Products.id,
@@ -114,7 +114,11 @@ class ApiClass {
 				Products, Categories
 			WHERE
 				Products.category_id = Categories.id
-  	`
+  	` + (
+			categoryId
+				? `AND Categories.id = ${categoryId}`
+				: ``
+		)
 		).then(async products => {
 			return await this.DBQuery(`
 				SELECT
@@ -138,6 +142,7 @@ class ApiClass {
 						title: elem.title,
 						price: elem.price,
 						url: elem.url,
+						categoryId: elem.category_id,
 						categoryTitle: elem.category_title,
 						params: params?.rows?.filter(el => el.product_id === elem.id).map(item => ({
 							name: item.name,

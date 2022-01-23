@@ -5,6 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 export const buttonTypes = {
   BASIC: 'BASIC',
   CREATE: 'CREATE',
+  ADD_TO_BASKET: 'ADD_TO_BASKET',
 } 
 
 export const buttonParams = {
@@ -18,4 +19,9 @@ export const buttonParams = {
     text: 'Create',
     style: 'buttonCreate',
   },
+  ADD_TO_BASKET: {
+    icon: null,
+    text: 'Ok',
+    style: 'buttonAddToBasket',
+  }
 }

@@ -5,6 +5,7 @@ export const styles = {
 		backgroundColor: theme.basic.inputBackgroundColor,
 		paddingTop: '10px',
 		paddingBottom: '10px',
+		marginRight: '30px',
 	}),
 	link: (theme) => ({
 		display: 'block',

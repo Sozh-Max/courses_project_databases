@@ -17,6 +17,7 @@ app.use(express.json());
 
 app.use('/api/users', usersRoutes);
 app.use('/api/orders', ordersRoutes);
+app.use('/api/orders/:id', ordersRoutes);
 app.use('/api/productParams', productParamsRouter);
 app.use('/api/categories', categoriesRoutes);
 app.use('/api/categories/:id', categoriesRoutes);

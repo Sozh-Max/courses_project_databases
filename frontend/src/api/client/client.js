@@ -151,6 +151,14 @@ class ApiClientClass {
 			method: 'POST',
 		});
 	}
+
+	getAllOrders = async (id) => {
+		return await this.request({
+			route: 'orders' + (id ? `/${id}` : ''),
+			data: {},
+			method: 'GET',
+		});
+	}
 }
 
 export const ApiClient = new ApiClientClass({

@@ -271,6 +271,53 @@ class ApiClass {
 		})
 	}
 
+	async getAllOrders(id) {
+		return await this.DBQuery(`
+			SELECT * FROM Orders
+		` + (id ? ` WHERE Orders.User_id = ${id}` : '')).then(async result => {
+			const array = []
+			for (let item of result.rows) {
+				const t = await this.DBQuery(`
+					SELECT * FROM Order_relations
+					WHERE
+				` + item.relations.split(',').map((el, i) => {
+					if (i === 0) {
+						return ` Order_relations.id = ${Number(el)}`
+					} else {
+						return ` OR Order_relations.id = ${Number(el)}`
+					}
+				}).join('')).then(async data => {
+					const res = {
+						...item,
+						products: data.rows
+					};
+					return await this.DBQuery(`
+						SELECT * FROM Products
+						WHERE
+					` + res.products.map((elem, i) => {
+						if (i === 0) {
+							return ` Products.id = ${elem.product_id}`
+						} else {
+							return ` OR Products.id = ${elem.product_id}`
+						}
+					}).join('')).then(async products => {
+						res.products = await res.products.map(elem => {
+								const y = products.rows.find(el => el.id === elem.product_id);
+								return {
+									count: elem.count,
+									...y
+								}
+							}
+						);
+						return res;
+					})
+				});
+				array.push(t);
+			}
+			return array;
+		});
+	}
+
 }
 
 module.exports = {

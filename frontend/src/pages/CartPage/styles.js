@@ -10,5 +10,5 @@ export const styles = {
 		justifyContent: 'space-between',
 		padding: '15px',
 		marginTop: '10px',
-	}
+	},
 }

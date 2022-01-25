@@ -21,6 +21,8 @@ export const styles = {
 	},
 	userBlock: {
 		marginLeft: '30px',
+		display: 'flex',
+		alignItems: 'center',
 	},
 	navContainer: {
 		flexGrow: 1,
@@ -34,5 +36,9 @@ export const styles = {
 		'&:hover': {
 			color: theme.basicButtons.colorPlay,
 		}
-	})
+	}),
+	userName: {
+		marginLeft: '10px',
+		marginRight: '10px',
+	}
 };

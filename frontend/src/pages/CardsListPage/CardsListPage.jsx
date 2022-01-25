@@ -13,7 +13,7 @@ import { styles } from './styles';
 export const CardsListPage = () => {
 	const params = useParams();
 	const navigate = useNavigate();
-	const { products } = useSelector(state => state.siteData)
+	const { products } = useSelector(state => state.siteData);
 
 	useEffect(() => {
 		const getProducts = async () => {

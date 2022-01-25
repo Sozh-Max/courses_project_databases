@@ -9,12 +9,13 @@ import { ModalLogin } from '../UIComponents/modals';
 import { initState } from './constants';
 import { ApiClient } from '../../api';
 import { StoreWorker } from '../../store';
+import { LocalStorageService } from '../../utils';
 
 import { styles } from './styles';
 
 export const Header = () => {
 	const [ openModal, detOpenModal ] = useState(false);
-	const { isAuthenticated } = useSelector(state => state.user);
+	const { isAuthenticated, userName, userCart } = useSelector(state => state.user);
 
 	const [ coreData, setCoreData ] = useState(initState);
 
@@ -33,21 +34,28 @@ export const Header = () => {
 				password: coreData.password,
 			}
 		).then(result => {
-			if (!result) {
-				StoreWorker.addStatusModalItem({
-					type: 'error',
-					text: 'Ошибка верификации! Такого пользователя не существует, либо пароль не верный.',
-				});
-			} else {
+			if (result?.login && result?.role && result?.id) {
 				StoreWorker.addStatusModalItem({
 					type: 'success',
 					text: `Доброго времени суток ${result.login}`,
 				});
 				StoreWorker.setUsername(result.login);
 				StoreWorker.setUserRole(result.role);
+				StoreWorker.setUserId(result.id);
 				StoreWorker.setAuthenticated(true);
+				LocalStorageService.setLocalStorageData('user', {id: result.id, token: result.token})
 				handleCloseModal();
+			} else {
+				StoreWorker.addStatusModalItem({
+					type: 'error',
+					text: 'Ошибка верификации! Такого пользователя не существует, либо пароль не верный.',
+				});
 			}
+		}).catch(error => {
+			StoreWorker.addStatusModalItem({
+				type: 'error',
+				text: error,
+			});
 		})
 	}
 
@@ -74,6 +82,15 @@ export const Header = () => {
 				text: error,
 			});
 		})
+	}
+
+	const handleLogout = () => {
+		StoreWorker.setUsername(null);
+		StoreWorker.setUserRole(null);
+		StoreWorker.setUserId(null);
+		StoreWorker.setAuthenticated(false);
+		StoreWorker.resetUserCart();
+		LocalStorageService.setLocalStorageData('user', null);
 	}
 
 	return (
@@ -106,6 +123,28 @@ export const Header = () => {
 								title='Авторизация/Регистрация'
 								onClick={handleOpenModal}
 							/>
+						)}
+						{isAuthenticated && (
+							<>
+								<Box
+									component={Link}
+									to='/Cart'
+									sx={styles.navLink}
+								>
+									{(userCart.length > 0)
+										? `В корзине ${userCart.length} шт`
+										: 'Корзина пуста'
+									}
+								</Box>
+								<Box sx={styles.userName}>
+									{ userName }
+								</Box>
+								<ButtonIconCustom
+									title='Выйти'
+									customType={iconTypes.LOGOUT}
+									onClick={handleLogout}
+								/>
+							</>
 						)}
 					</Box>
 				</Box>

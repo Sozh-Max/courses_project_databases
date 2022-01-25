@@ -4,6 +4,7 @@ CREATE TABLE Users (
 	"password" TEXT NOT NULL,
 	"role" int NOT NULL,
 	"is_active" BOOLEAN NOT NULL DEFAULT 'true',
+	"token" TEXT,
 	"created_at" TIMESTAMP NOT NULL,
 	CONSTRAINT "Users_pk" PRIMARY KEY ("id")
 ) WITH (

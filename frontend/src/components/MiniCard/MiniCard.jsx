@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { ButtonCustom } from '../UIComponents';
 import { buttonTypes } from '../UIComponents/buttons/ButtonCustom/constants';
 import { useSelector } from 'react-redux';
+import { StoreWorker } from '../../store';
 
 export const MiniCard = ({
 	id,
@@ -18,8 +19,13 @@ export const MiniCard = ({
 	params,
 }) => {
 	const { role } = useSelector(state => state.user);
+	const { products } = useSelector(state => state.siteData);
 
 	const navigate = useNavigate();
+
+	const handleClick = () => {
+		StoreWorker.setUserCart(products.find(elem => elem.id === id))
+	}
 
 	const handleClickCategory = () => {
 		navigate(`/${categoryId}`)
@@ -60,6 +66,7 @@ export const MiniCard = ({
 							<Box sx={styles.buttonContainer}>
 								<ButtonCustom
 									customType={buttonTypes.ADD_TO_BASKET}
+									onClick={handleClick}
 									text='В корзину'
 								/>
 							</Box>

@@ -225,6 +225,7 @@ class ApiClass {
 				if (item.login === data.login && item.is_active) {
 					if (item.password === md5(data.password)) {
 						result = {
+							id: item.id,
 							role: item.role,
 							login: item.login,
 						}
@@ -233,6 +234,21 @@ class ApiClass {
 			}
 			return result;
 		})
+	}
+
+	async setTokenForUser(id, token) {
+		await this.DBQuery(`
+			UPDATE Users
+			SET
+				token='${token}'
+			WHERE id='${id}'
+		`)
+	}
+
+	async getUserById(id) {
+		return await this.DBQuery(`
+			SELECT * FROM Users WHERE id='${id}'
+		`)
 	}
 
 }

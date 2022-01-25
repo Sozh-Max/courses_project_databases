@@ -17,6 +17,8 @@ export const styles = {
 		marginRight: '-15px',
 	},
 	content: {
+		display: 'flex',
+		flexDirection: 'column',
 		flexGrow: 1,
 	}
 }

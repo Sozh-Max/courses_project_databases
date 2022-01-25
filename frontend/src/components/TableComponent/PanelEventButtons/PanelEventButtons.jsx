@@ -10,26 +10,26 @@ export const PanelEventButtons = ({
   handlerData: { id, isActive },
   panelEventEditItem,
   panelEventDeleteItem,
-  panelEventPlayItem,
-  panelEventPauseItem
+  panelEventMinusItem,
+  panelEventPlusItem,
 }) => {
 
   return (
     <Box sx={styles.wrapper}>
-      {panelEventPlayItem && !isActive && (
+      {panelEventMinusItem && (
         <Box sx={styles.buttonContainer}>
           <ButtonIconCustom
-            onClick={panelEventPlayItem ? () => panelEventPlayItem(id) : null}
-            customType={iconTypes.PLAY}
+            onClick={panelEventMinusItem ? () => panelEventMinusItem(id) : null}
+            customType={iconTypes.MINUS}
           />
         </Box>
       )}
 
-      {panelEventPauseItem && isActive && (
+      {panelEventPlusItem && (
         <Box sx={styles.buttonContainer}>
           <ButtonIconCustom
-            onClick={panelEventPauseItem ? () => panelEventPauseItem(id) : null}
-            customType={iconTypes.PAUSE}
+            onClick={panelEventPlusItem ? () => panelEventPlusItem(id) : null}
+            customType={iconTypes.PLUS}
           />
         </Box>
       )}

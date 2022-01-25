@@ -17,8 +17,12 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
 	try {
-		const data = await Api.getAllProducts();
-		res.status(200).json(data);
+		await Api.getAllProducts().then(data => {
+			if (data) {
+				res.status(200).json(data);
+			}
+		});
+
 	} catch (e) {
 		console.log(e)
 		res.status(500).json({

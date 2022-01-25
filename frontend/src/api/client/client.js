@@ -129,6 +129,22 @@ class ApiClientClass {
 			method: 'POST',
 		});
 	}
+
+	verification = async (data) => {
+		return await this.request({
+			route: `users/verification`,
+			data,
+			method: 'POST',
+		});
+	}
+
+	logout = async (data) => {
+		return await this.request({
+			route: `users/logout`,
+			data,
+			method: 'POST',
+		});
+	}
 }
 
 export const ApiClient = new ApiClientClass({

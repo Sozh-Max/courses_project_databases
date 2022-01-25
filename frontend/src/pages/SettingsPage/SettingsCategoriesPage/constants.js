@@ -9,7 +9,6 @@ export const initCategoriesState = {
 	descriptionError: false,
 }
 
-
 export const categoriesColumn = [
 	{
 		width: 400,

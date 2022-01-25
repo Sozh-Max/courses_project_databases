@@ -128,6 +128,13 @@ export const Header = () => {
 							<>
 								<Box
 									component={Link}
+									to='/Orders'
+									sx={styles.navLink}
+								>
+									История заказов
+								</Box>
+								<Box
+									component={Link}
 									to='/Cart'
 									sx={styles.navLink}
 								>

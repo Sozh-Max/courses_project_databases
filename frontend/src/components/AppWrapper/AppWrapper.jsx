@@ -12,6 +12,7 @@ import {
 	SettingsProductsPage,
 	SettingsCategoriesPage,
 	MainPage,
+	OrdersPage,
 } from '../../pages';
 import { StatusModalContainer } from '../StatusModalContainer';
 
@@ -32,6 +33,7 @@ export const AppWrapper = () => {
 				if (data?.login && data?.role) {
 					StoreWorker.setUsername(data.login);
 					StoreWorker.setUserRole(data.role);
+					StoreWorker.setUserId(data.id);
 					StoreWorker.setAuthenticated(true);
 				}
 			})
@@ -58,7 +60,10 @@ export const AppWrapper = () => {
 						<Route path='/' element={<CardsListPage />} />
 						<Route path='/:id' element={<CardsListPage />} />
 						{(role === 2) && (
-							<Route path='/Cart' element={<CartPage />} />
+							<>
+								<Route path='/Cart' element={<CartPage />} />
+								<Route path='/Orders' element={<OrdersPage />} />
+							</>
 						)}
 					</Route>
 					<Route path='Settings' element={<SettingsPage />}>

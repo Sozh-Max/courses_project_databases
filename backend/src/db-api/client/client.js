@@ -251,6 +251,26 @@ class ApiClass {
 		`)
 	}
 
+	async createOrder(data) {
+		return Promise.all(
+			data.orderList.map(async elem => {
+				return await this.DBQuery(`
+					INSERT INTO Order_relations (product_id,count)
+					VALUES ('${elem.id}', '${elem.value}') RETURNING id
+				`)
+			})
+		).then(async res => {
+			const list = res.map(el => {
+				return el.rows[0].id;
+			});
+			return await this.DBQuery(`
+				INSERT INTO Orders (relations,user_id,created_at)
+				VALUES ('${list.join(',')}', '${data.userId}', NOW())
+				RETURNING id
+			`)
+		})
+	}
+
 }
 
 module.exports = {

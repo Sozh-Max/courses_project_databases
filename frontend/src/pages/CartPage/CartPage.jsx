@@ -6,16 +6,25 @@ import Box from '@mui/material/Box';
 import { TableComponent } from '../../components/TableComponent';
 import { cartsColumn } from './constants';
 import { StoreWorker } from '../../store';
-
-import { styles } from './styles';
 import { ButtonCustom } from '../../components/UIComponents';
 import { buttonTypes } from '../../components/UIComponents/buttons/ButtonCustom/constants';
+import { ApiClient } from '../../api';
+import { useNavigate } from 'react-router-dom';
+
+import { styles } from './styles';
 
 export const CartPage = () => {
-	const {userCart} = useSelector(state => state.user);
+	const navigate = useNavigate();
+	const {userCart, id} = useSelector(state => state.user);
 
 	const createOrder = async () => {
-
+		return ApiClient.createOrder({
+			userId: id,
+			orderList: userCart,
+		}).then(data => {
+			navigate('/Orders');
+			StoreWorker.resetUserCart();
+		})
 	}
 
 	const handleEventMinus = (id) => {
@@ -61,11 +70,13 @@ export const CartPage = () => {
 					{`Всего стоимость: ${total}`}
 				</Box>
 				<Box>
-					<ButtonCustom
-						text="Заказать"
-						customType={buttonTypes.ADD_TO_BASKET}
-						onClick={createOrder}
-					/>
+					{Boolean(userCart.length) && (
+						<ButtonCustom
+							text="Заказать"
+							customType={buttonTypes.ADD_TO_BASKET}
+							onClick={createOrder}
+						/>
+					)}
 				</Box>
 			</Box>
 		</Box>

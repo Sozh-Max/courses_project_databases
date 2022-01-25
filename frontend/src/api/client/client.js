@@ -1,5 +1,3 @@
-import { logDOM } from '@testing-library/react';
-
 class ApiClientClass {
 	constructor({ port, url }) {
 		this.address = `${url}:${port}/api/`;
@@ -141,6 +139,14 @@ class ApiClientClass {
 	logout = async (data) => {
 		return await this.request({
 			route: `users/logout`,
+			data,
+			method: 'POST',
+		});
+	}
+
+	createOrder = async (data) => {
+		return await this.request({
+			route: `orders`,
 			data,
 			method: 'POST',
 		});

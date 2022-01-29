@@ -8,6 +8,11 @@ export const orderColumn = [
 	},
 	{
 		width: 400,
+		label: 'Имя Пользователя',
+		dataKey: 'userName',
+	},
+	{
+		width: 400,
 		label: 'Дата',
 		dataKey: 'date',
 	},

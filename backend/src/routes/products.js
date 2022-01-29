@@ -45,7 +45,7 @@ router.get('/category/:id', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
 	try {
-		const data = await Api.getProductBiId(req.params.id);
+		const data = await Api.getProductById(req.params.id);
 		res.status(200).json(data);
 	} catch (e) {
 		console.log(e)

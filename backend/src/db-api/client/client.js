@@ -67,7 +67,7 @@ class ApiClass {
 			return await currentParams.map(async elem => {
 				return await this.DBQuery(`
 					INSERT INTO Product_params_values (product_id,product_param_id,value)
-					VALUES ('${product.rows[0].id}', '${elem.id}', '${elem.value}')
+					VALUES ('${product.rows[0].id}', '${elem.id}', '${elem.value.trim()}')
 				`);
 			});
 		})
@@ -153,7 +153,7 @@ class ApiClass {
 		})
 	}
 
-	async getProductBiId(id) {
+	async getProductById(id) {
 		return await this.DBQuery(`
 			SELECT
 				Products.id,
@@ -274,7 +274,8 @@ class ApiClass {
 	async getAllOrders(id) {
 		return await this.DBQuery(`
 			SELECT * FROM Orders
-		` + (id ? ` WHERE Orders.User_id = ${id}` : '')).then(async result => {
+		` + (id ? ` WHERE Orders.User_id = ${id}` : ''))
+		.then(async result => {
 			const array = []
 			for (let item of result.rows) {
 				const t = await this.DBQuery(`
@@ -315,6 +316,14 @@ class ApiClass {
 				array.push(t);
 			}
 			return array;
+		}).then(async orders => {
+			return await this.getAllUsers().then(users => {
+
+				return orders.map(elem => ({
+					...elem,
+					userName: users.rows.find(el => el.id === elem.user_id).login,
+				}))
+			})
 		});
 	}
 

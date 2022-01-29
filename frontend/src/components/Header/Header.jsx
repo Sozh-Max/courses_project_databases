@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
 
@@ -14,6 +14,8 @@ import { LocalStorageService } from '../../utils';
 import { styles } from './styles';
 
 export const Header = () => {
+	const navigate = useNavigate();
+
 	const [ openModal, detOpenModal ] = useState(false);
 	const { isAuthenticated, userName, userCart, role } = useSelector(state => state.user);
 
@@ -85,6 +87,7 @@ export const Header = () => {
 	}
 
 	const handleLogout = () => {
+		navigate('/');
 		StoreWorker.setUsername(null);
 		StoreWorker.setUserRole(null);
 		StoreWorker.setUserId(null);
@@ -118,6 +121,15 @@ export const Header = () => {
 									Админка
 								</Box>
 							</>
+						)}
+						{(role !== 1) && (
+							<Box
+								component={Link}
+								to='/'
+								sx={styles.navLink}
+							>
+								Главная
+							</Box>
 						)}
 					</Box>
 					<Box sx={styles.userBlock}>

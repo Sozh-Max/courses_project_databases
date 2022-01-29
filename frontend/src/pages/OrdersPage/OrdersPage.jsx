@@ -23,6 +23,7 @@ export const OrdersPage = () => {
 		getAllOrders().then(data => {
 			setOrderList(data.map(elem => ({
 				id: elem.id,
+				userName: elem.userName,
 				date: new Date(elem.created_at).toLocaleDateString('ru-Ru'),
 				price: elem.products.reduce((sum, next) => {
 					return sum + next.count * next.price;

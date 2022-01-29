@@ -32,7 +32,7 @@ class ApiClass {
 	}
 
 	async getAllUsers() {
-		return await this.DBQuery('SELECT * FROM Users');
+		return await this.DBQuery('SELECT * FROM Users ORDER BY id');
 	}
 
 	async getAllCategories() {
@@ -116,8 +116,8 @@ class ApiClass {
 				Products.category_id = Categories.id
   	` + (
 			categoryId
-				? `AND Categories.id = ${categoryId}`
-				: ``
+				? `AND Categories.id = ${categoryId} ORDER BY id`
+				: ` ORDER BY id`
 		)
 		).then(async products => {
 			return await this.DBQuery(`

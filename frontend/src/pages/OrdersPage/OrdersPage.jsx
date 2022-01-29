@@ -10,11 +10,11 @@ import { orderColumn } from './constants';
 
 export const OrdersPage = () => {
 	const [orderList, setOrderList] = useState([]);
-	const { id } = useSelector(state => state.user);
+	const { id, role } = useSelector(state => state.user);
 
 	useEffect(() => {
 		const getAllOrders = async () => {
-			return await ApiClient.getAllOrders(id);
+			return await ApiClient.getAllOrders((role == 2) ? id : undefined);
 		}
 		getAllOrders().then(data => {
 			setOrderList(data.map(elem => ({

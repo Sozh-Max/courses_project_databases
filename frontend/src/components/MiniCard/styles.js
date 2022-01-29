@@ -15,6 +15,7 @@ export const styles = {
 	imageBlock: {
 		paddingBottom: '100%',
 		position: 'relative',
+		backgroundColor: 'rgba(255, 255, 255, 0.8)',
 
 		'& img': {
 			display: 'block',

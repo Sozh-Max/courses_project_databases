@@ -15,7 +15,7 @@ import { styles } from './styles';
 
 export const Header = () => {
 	const [ openModal, detOpenModal ] = useState(false);
-	const { isAuthenticated, userName, userCart } = useSelector(state => state.user);
+	const { isAuthenticated, userName, userCart, role } = useSelector(state => state.user);
 
 	const [ coreData, setCoreData ] = useState(initState);
 
@@ -101,20 +101,24 @@ export const Header = () => {
 			<Box sx={styles.container}>
 				<Box sx={styles.row}>
 					<Box sx={styles.navContainer}>
-						<Box
-							component={Link}
-							to='/'
-							sx={styles.navLink}
-						>
-							Сайт
-						</Box>
-						<Box
-							component={Link}
-							to='/settings'
-							sx={styles.navLink}
-						>
-							Админка
-						</Box>
+						{(role === 1) && (
+							<>
+								<Box
+									component={Link}
+									to='/'
+									sx={styles.navLink}
+								>
+									Сайт
+								</Box>
+								<Box
+									component={Link}
+									to='/settings'
+									sx={styles.navLink}
+								>
+									Админка
+								</Box>
+							</>
+						)}
 					</Box>
 					<Box sx={styles.userBlock}>
 						{!isAuthenticated && (
@@ -126,23 +130,27 @@ export const Header = () => {
 						)}
 						{isAuthenticated && (
 							<>
-								<Box
-									component={Link}
-									to='/Orders'
-									sx={styles.navLink}
-								>
-									История заказов
-								</Box>
-								<Box
-									component={Link}
-									to='/Cart'
-									sx={styles.navLink}
-								>
-									{(userCart.length > 0)
-										? `В корзине ${userCart.length} шт`
-										: 'Корзина пуста'
-									}
-								</Box>
+								{(role === 2) && (
+									<>
+										<Box
+											component={Link}
+											to='/Orders'
+											sx={styles.navLink}
+										>
+											История заказов
+										</Box>
+										<Box
+											component={Link}
+											to='/Cart'
+											sx={styles.navLink}
+										>
+											{(userCart.length > 0)
+												? `В корзине ${userCart.length} шт`
+												: 'Корзина пуста'
+											}
+										</Box>
+									</>
+								)}
 								<Box sx={styles.userName}>
 									{ userName }
 								</Box>

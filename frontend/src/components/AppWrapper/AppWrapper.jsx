@@ -61,15 +61,18 @@ export const AppWrapper = () => {
 						<Route path='/:id' element={<CardsListPage />} />
 						{(role === 2) && (
 							<>
-								<Route path='/Cart' element={<CartPage />} />
-								<Route path='/Orders' element={<OrdersPage />} />
+								<Route path='Cart' element={<CartPage />} />
+								<Route path='Orders' element={<OrdersPage />} />
 							</>
 						)}
 					</Route>
-					<Route path='Settings' element={<SettingsPage />}>
-						<Route path='Categories' element={<SettingsCategoriesPage />} />
-						<Route path='Products' element={<SettingsProductsPage />} />
-					</Route>
+					{(role === 1) && (
+						<Route path='Settings' element={<SettingsPage />}>
+							<Route path='Categories' element={<SettingsCategoriesPage />} />
+							<Route path='Products' element={<SettingsProductsPage />} />
+							<Route path='Orders' element={<OrdersPage />} />
+						</Route>
+					)}
 				</Route>
 			</Routes>
 			<StatusModalContainer />

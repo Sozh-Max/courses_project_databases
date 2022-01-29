@@ -76,4 +76,15 @@ export const styles = {
       height: 24,
     },
   }),
+  DETAILS: (theme) => ({
+    color: theme.basicButtons.colorPlay,
+    padding: '5px',
+    '&:hover': {
+      color: theme.basicButtons.colorPlayHover,
+    },
+    '& .MuiSvgIcon-root': {
+      width: 24,
+      height: 24,
+    },
+  }),
 }

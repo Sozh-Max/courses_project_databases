@@ -3,3 +3,4 @@ export * from './ModalWrapper';
 export * from './ModalCategory';
 export * from './ModalProduct';
 export * from './ModalLogin';
+export * from './ModalTable';

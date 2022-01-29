@@ -6,4 +6,5 @@ export const iconTypes = {
   LOGOUT: 'LOGOUT',
   PLUS: 'PLUS',
   MINUS: 'MINUS',
+  DETAILS: 'DETAILS',
 }

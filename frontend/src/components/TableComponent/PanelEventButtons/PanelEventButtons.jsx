@@ -12,6 +12,7 @@ export const PanelEventButtons = ({
   panelEventDeleteItem,
   panelEventMinusItem,
   panelEventPlusItem,
+  panelEventDetailsItem,
 }) => {
 
   return (
@@ -48,6 +49,15 @@ export const PanelEventButtons = ({
           <ButtonIconCustom
             onClick={panelEventDeleteItem ? () => panelEventDeleteItem(id) : null}
             customType={iconTypes.DELETE}
+          />
+        </Box>
+      )}
+
+      {panelEventDetailsItem && (
+        <Box sx={styles.buttonContainer}>
+          <ButtonIconCustom
+            onClick={panelEventDetailsItem ? () => panelEventDetailsItem(id) : null}
+            customType={iconTypes.DETAILS}
           />
         </Box>
       )}

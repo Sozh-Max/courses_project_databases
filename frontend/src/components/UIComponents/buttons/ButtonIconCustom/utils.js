@@ -7,6 +7,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import InfoIcon from '@mui/icons-material/Info';
 
 import { iconTypes } from './constants';
 
@@ -24,6 +25,8 @@ export const getIconByType = type => {
       return <AddIcon />
     case iconTypes.MINUS:
       return <RemoveIcon />
+    case iconTypes.DETAILS:
+      return <InfoIcon />
     default:
       return <AlarmIcon />
   }
